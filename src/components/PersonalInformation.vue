@@ -33,14 +33,6 @@
           placeholder="شماره موبایل"
         ></b-form-input>
       </b-form-group>
-      <b-row>
-        <b-col>
-          <b-button type="submit" variant="success">Submit</b-button>
-        </b-col>
-        <b-col>
-          <b-button type="reset" variant="danger">Reset</b-button>
-        </b-col>
-      </b-row>
     </b-form>
   </div>
 </template>
