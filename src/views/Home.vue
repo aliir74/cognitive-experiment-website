@@ -8,7 +8,7 @@
           <b-col cols="2"></b-col>
           <b-col>
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
-            <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 1"/>
+            <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -18,7 +18,7 @@
             <b-button variant="success" v-on:click="step += 1">بعدی</b-button>
           </b-col>
           <b-col>
-            <b-button variant="danger" v-show="step == 0">پاک کردن اطلاعات</b-button>
+            <b-button variant="danger" v-on:click="step -= 1" :disabled="!(step <= 2 && step >= 1)">قبلی</b-button>
           </b-col>
           <b-col></b-col>
         </b-row>
@@ -33,18 +33,18 @@
 <script>
 // @ is an alias to /src
 import PersonalInformation from '@/components/PersonalInformation'
-import HelloWorld from '@/components/HelloWorld'
+import Explain from '@/components/Explain'
 
 export default {
   name: 'home',
   components: {
     PersonalInformation,
-    HelloWorld
+    Explain
   },
   props: {
     step: {
       type: Number,
-      default: 0
+      default: 1
     }
   }
 }
