@@ -5,16 +5,22 @@
 
       <b-col cols="8">
         <b-row class="vh-50">
-          <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
-          <HelloWorld msg="Welcome to my cognitive experiment" v-show="step == 1"/>
+          <b-col cols="2"></b-col>
+          <b-col>
+            <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
+            <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 1"/>
+          </b-col>
+          <b-col cols="2"></b-col>
         </b-row>
-        <b-row>
+        <b-row class="vh-50">
+          <b-col></b-col>
           <b-col>
             <b-button variant="success" v-on:click="step += 1">بعدی</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-show="step == 0">پاک کردن اطلاعات</b-button>
           </b-col>
+          <b-col></b-col>
         </b-row>
       </b-col>
 
