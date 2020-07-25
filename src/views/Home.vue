@@ -9,6 +9,7 @@
           <b-col>
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
+            <Decision msg="Welcome to my cognitive experiment" v-show="step == 2"/>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -34,17 +35,19 @@
 // @ is an alias to /src
 import PersonalInformation from '@/components/PersonalInformation'
 import Explain from '@/components/Explain'
+import Decision from '@/components/Decision'
 
 export default {
   name: 'home',
   components: {
     PersonalInformation,
-    Explain
+    Explain,
+    Decision
   },
   props: {
     step: {
       type: Number,
-      default: 1
+      default: 2
     }
   }
 }
