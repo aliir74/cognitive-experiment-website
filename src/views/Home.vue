@@ -7,9 +7,9 @@
         <b-row class="vh-50" style="min-height: 50vh !important;">
           <b-col cols="2"></b-col>
           <b-col>
-            <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
+            <PersonalInformation :form.sync="person" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
-            <Decision v-bind:msg="decision_msg" v-show="step == 2"/>
+            <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" v-show="step == 2"/>
             <Decision v-for="(it, index) in god_numbers"
                       v-bind:msg="god_msg.replace('{0}', it).replace('{1}', god_value)"
                       :key="index" v-show="step == 3+index" :value.sync="value[index]"></Decision>
@@ -27,7 +27,7 @@
         <b-row class="vh-50">
           <b-col></b-col>
           <b-col>
-            <b-button variant="success" v-on:click="step += 1">بعدی</b-button>
+            <b-button variant="success" v-on:click="step += 1" :disabled="nextButton()">بعدی</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-on:click="step -= 1" :disabled="false && !(step <= 2 && step >= 1)">قبلی</b-button>
@@ -63,7 +63,13 @@ export default {
       value: [0, 0, 0, 0],
       judge_value: [5, 5, 5, 5],
       god_value: 100,
-      iri_value: new Array(8)
+      iri_value: new Array(8),
+      dictator_value: 0,
+      person: {
+        'name': '',
+        'email': '',
+        'mobile': ''
+      }
     }
   },
   components: {
@@ -76,7 +82,15 @@ export default {
   props: {
     step: {
       type: Number,
-      default: -1
+      default: 0
+    }
+  },
+  methods: {
+    nextButton: function () {
+      if (this.step === 0) {
+        return !((this.person.name.length !== 0) && (this.person.email.length !== 0) && (this.person.mobile.length !== 0))
+      }
+      return false
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <b-card>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form v-if="show">
       <b-form-group
         id="input-group-1"
         label="آدرس ایمیل:"
@@ -13,6 +13,7 @@
           type="email"
           required
           placeholder="ایمیل خود را وارد کنید"
+          @keyup="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
 
@@ -22,15 +23,17 @@
           v-model="form.name"
           required
           placeholder="نام و نام خانوادگی"
+          @keyup="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-3" label="شماره موبایل:" label-for="input-2">
+      <b-form-group id="input-group-3" label="شماره موبایل:" label-for="input-3">
         <b-form-input
-          id="input-2"
-          v-model="form.name"
+          id="input-3"
+          v-model="form.mobile"
           required
           placeholder="شماره موبایل"
+          @keyup="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
     </b-form>
@@ -44,30 +47,9 @@ export default {
       form: {
         email: '',
         name: '',
-        food: null,
-        checked: []
+        mobile: ''
       },
-      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
       show: true
-    }
-  },
-  methods: {
-    onSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
-    },
-    onReset (evt) {
-      evt.preventDefault()
-      // Reset our form values
-      this.form.email = ''
-      this.form.name = ''
-      this.form.food = null
-      this.form.checked = []
-      // Trick to reset/clear native browser form validation state
-      this.show = false
-      this.$nextTick(() => {
-        this.show = true
-      })
     }
   }
 }
