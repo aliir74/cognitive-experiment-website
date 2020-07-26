@@ -1,23 +1,25 @@
 <template>
-  <b-card img-right>
-      <b-card-text>
-        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟
-      </b-card-text>
-      <div>
-      <b-input-group prepend="0" append="100">
-        <b-form-input v-model="value" type="range" min="0" max="100"></b-form-input>
-      </b-input-group>
-      <p style="padding-left: 20px">{{value}}</p>
+    <b-card img-right>
+        <b-card-text>
+            {{ msg }}
+        </b-card-text>
+        <div>
+            <b-input-group prepend="0" append="100">
+                <b-form-input v-model="value" type="range" min="0" max="100"></b-form-input>
+            </b-input-group>
+            <p style="padding-left: 20px">{{value}}</p>
 
-  </div>
+        </div>
     </b-card>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      value: 50
+  props: {
+    msg: String,
+    value: {
+      type: Number,
+      default: 50
     }
   },
   methods: {

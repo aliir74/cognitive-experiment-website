@@ -9,7 +9,8 @@
           <b-col>
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
-            <Decision msg="Welcome to my cognitive experiment" v-show="step == 2"/>
+            <Decision v-bind:msg="decision_msg" v-show="step == 2"/>
+
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -39,6 +40,11 @@ import Decision from '@/components/Decision'
 
 export default {
   name: 'home',
+  data () {
+    return {
+      decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟'
+    }
+  },
   components: {
     PersonalInformation,
     Explain,
@@ -49,6 +55,7 @@ export default {
       type: Number,
       default: 2
     }
+
   }
 }
 </script>
