@@ -27,7 +27,7 @@
         <b-row class="vh-50">
           <b-col></b-col>
           <b-col>
-            <b-button variant="success" v-on:click="step += 1" :disabled="nextButton()">بعدی</b-button>
+            <b-button variant="success" v-on:click="nextStep()" :disabled="nextButton()">بعدی</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-on:click="step -= 1" :disabled="false && !(step <= 2 && step >= 1)">قبلی</b-button>
@@ -49,6 +49,7 @@ import Explain from '@/components/Explain'
 import Decision from '@/components/Decision'
 import Judge from '../components/Judge'
 import IRI from '../components/IRI'
+import $backend from '../backend'
 
 export default {
   name: 'home',
@@ -60,8 +61,8 @@ export default {
       judge_msg: 'فرض کنید نفر اول به نفر دوم {0} هزار تومن پول داده است. به میزان خودخواهی نفر اول از 0 تا 10 نمره دهید.',
       iri_msg: [' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.'],
       god_numbers: [0, 10, 20, 30],
-      value: [0, 0, 0, 0],
-      judge_value: [5, 5, 5, 5],
+      value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      judge_value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
       god_value: 100,
       iri_value: new Array(8),
       dictator_value: 0,
@@ -91,6 +92,19 @@ export default {
         return !((this.person.name.length !== 0) && (this.person.email.length !== 0) && (this.person.mobile.length !== 0))
       }
       return false
+    },
+    nextStep: function () {
+      if (this.step === 0) {
+        $backend.register({'person': this.person}).then(responseData => {
+          this.god_numbers = responseData.result.god_numbers
+          this.god_value = responseData.result.god_value
+          this.step += 1
+        }).catch(error => {
+          alert(error.message)
+        })
+      } else {
+        this.step += 1
+      }
     }
   }
 }

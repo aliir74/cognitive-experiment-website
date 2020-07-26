@@ -29,8 +29,9 @@ def get_texts():
 
 @app.route('/register', methods=['POST'])
 def register():
-    form_data = request.form
-    god_numbers = random.shuffle([x*10 for x in range(0,10)])
+    form_data = request.get_json().get('person')
+    god_numbers = [x*10 for x in range(0, 10)]
+    random.shuffle(god_numbers)
     values = [100, 200, 400]
     god_value = values[random.randint(0, 2)]
     mongo.db.users.insert_one({'email': form_data.get('email'),

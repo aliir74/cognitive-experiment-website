@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 let $axios = axios.create({
-  baseURL: '/api/',
-  timeout: 5000,
+  baseURL: '/',
+  timeout: 500000,
   headers: {'Content-Type': 'application/json'}
 })
 
@@ -22,7 +22,10 @@ $axios.interceptors.response.use(function (response) {
 })
 
 export default {
-
+  register (data) {
+    return $axios.post(`register`, data)
+      .then(response => response.data)
+  },
   fetchResource () {
     return $axios.get(`resource/xxx`)
       .then(response => response.data)
