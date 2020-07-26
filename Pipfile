@@ -8,12 +8,14 @@ gunicorn = "==19.7.1"
 flask-restplus = "*"
 python-dotenv = "*"
 flask = "*"
+Flask-PyMongo = "*"
 
 [dev-packages]
 pytest = "*"
 bumpversion = "*"
 pytest-sugar = "*"
 pytest-cov = "*"
+Flask-PyMongo = "*"
 
 [requires]
 python_version = "3.6"
