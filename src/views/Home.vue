@@ -20,6 +20,7 @@
             <Judge v-for="(it, index) in god_numbers" :key="index"
                    v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index"
                    v-bind:value="judge_value[index]"></Judge>
+            <IRI v-show="step == 3+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -47,6 +48,7 @@ import PersonalInformation from '@/components/PersonalInformation'
 import Explain from '@/components/Explain'
 import Decision from '@/components/Decision'
 import Judge from '../components/Judge'
+import IRI from '../components/IRI'
 
 export default {
   name: 'home',
@@ -56,13 +58,16 @@ export default {
       god_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و {1} هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
       again_god_msg: 'شما به کسی که {0} هزار تومن به نفر دوم داده بود {1} هزار تومن داده‌اید. در زیر میزان پول دو نفر را پس از تقسیم پول‌ها می‌بینید. اگر مایلید مقدار پول تقسیم کرده‌ی خود را عوض کنید.',
       judge_msg: 'فرض کنید نفر اول به نفر دوم {0} هزار تومن پول داده است. به میزان خودخواهی نفر اول از 0 تا 10 نمره دهید.',
+      iri_msg: [' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.'],
       god_numbers: [0, 10, 20, 30],
       value: [0, 0, 0, 0],
       judge_value: [5, 5, 5, 5],
-      god_value: 100
+      god_value: 100,
+      iri_value: new Array(8)
     }
   },
   components: {
+    IRI,
     Judge,
     PersonalInformation,
     Explain,
@@ -71,7 +76,7 @@ export default {
   props: {
     step: {
       type: Number,
-      default: 3
+      default: -1
     }
   }
 }
