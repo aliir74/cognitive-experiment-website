@@ -10,12 +10,16 @@
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
             <Decision v-bind:msg="decision_msg" v-show="step == 2"/>
-            <Decision v-for="(it, index) in god_numbers" v-bind:msg="god_msg.replace('{0}', it)"
+            <Decision v-for="(it, index) in god_numbers"
+                      v-bind:msg="god_msg.replace('{0}', it).replace('{1}', god_value)"
                       :key="index" v-show="step == 3+index" :value.sync="value[index]"></Decision>
             <Decision v-for="(it, index) in god_numbers" :key="index"
                       v-bind:msg="again_god_msg.replace('{0}', it).replace('{1}', value[index])"
                       v-show="step == 3+god_numbers.length+index" v-bind:value="value[index]"
-                      v-bind:show_progress="true" v-bind:show_money="true"></Decision>
+                      v-bind:show_progress="true" v-bind:show_money="true" v-bind:god_value="god_value"></Decision>
+            <Judge v-for="(it, index) in god_numbers" :key="index"
+                   v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index"
+                   v-bind:value="judge_value[index]"></Judge>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -42,19 +46,24 @@
 import PersonalInformation from '@/components/PersonalInformation'
 import Explain from '@/components/Explain'
 import Decision from '@/components/Decision'
+import Judge from '../components/Judge'
 
 export default {
   name: 'home',
   data () {
     return {
       decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟',
-      god_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و 100 هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
+      god_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و {1} هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
       again_god_msg: 'شما به کسی که {0} هزار تومن به نفر دوم داده بود {1} هزار تومن داده‌اید. در زیر میزان پول دو نفر را پس از تقسیم پول‌ها می‌بینید. اگر مایلید مقدار پول تقسیم کرده‌ی خود را عوض کنید.',
-      god_numbers: [30, 60, 100, 5],
-      value: [0, 0, 0, 0]
+      judge_msg: 'فرض کنید نفر اول به نفر دوم {0} هزار تومن پول داده است. به میزان خودخواهی نفر اول از 0 تا 10 نمره دهید.',
+      god_numbers: [0, 10, 20, 30],
+      value: [0, 0, 0, 0],
+      judge_value: [5, 5, 5, 5],
+      god_value: 100
     }
   },
   components: {
+    Judge,
     PersonalInformation,
     Explain,
     Decision
@@ -63,11 +72,6 @@ export default {
     step: {
       type: Number,
       default: 3
-    }
-  },
-  filters: {
-    god_msg_format: function (msg, money) {
-      return msg.replace(money)
     }
   }
 }

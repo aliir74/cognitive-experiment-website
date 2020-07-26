@@ -18,7 +18,7 @@
             پول نفر اول: {{value}}
         </b-card-text>
         <b-card-text v-if="show_money">
-            پول نفر دوم: {{100-value}}
+            پول نفر دوم: {{god_value-value}}
         </b-card-text>
     </b-card>
 </template>
@@ -31,6 +31,7 @@ export default {
       type: Boolean,
       default: false
     },
+    god_value: Number,
     show_money: {
       type: Boolean,
       default: false
