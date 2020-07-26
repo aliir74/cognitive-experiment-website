@@ -8,8 +8,13 @@
                 <b-form-input v-model="value" type="range" min="0" max="100"></b-form-input>
             </b-input-group>
             <p style="padding-left: 20px">{{value}}</p>
-
         </div>
+        <b-card-text v-if="supervisor">
+            پول نفر اول: {{value}}
+        </b-card-text>
+        <b-card-text v-if="supervisor">
+            پول نفر دوم: {{100-value}}
+        </b-card-text>
     </b-card>
 </template>
 
@@ -17,6 +22,10 @@
 export default {
   props: {
     msg: String,
+    supervisor: {
+      type: Boolean,
+      default: false
+    },
     value: {
       type: Number,
       default: 50

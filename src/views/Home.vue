@@ -10,7 +10,8 @@
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
             <Decision v-bind:msg="decision_msg" v-show="step == 2"/>
-
+            <Decision v-for="(it, index) in supervisor_numbers" v-bind:msg="supervisor_msg.replace('{0}', it)" :key="index"
+                      v-show="step == 3+index" v-bind:supervisor="true"></Decision>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -42,7 +43,9 @@ export default {
   name: 'home',
   data () {
     return {
-      decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟'
+      decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟',
+      supervisor_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و ۱۰۰ هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
+      supervisor_numbers: [30, 60, 100, 5]
     }
   },
   components: {
@@ -53,9 +56,13 @@ export default {
   props: {
     step: {
       type: Number,
-      default: 2
+      default: 3
     }
-
+  },
+  filters: {
+    supervisor_msg_format: function (msg, money) {
+      return msg.replace(money)
+    }
   }
 }
 </script>
