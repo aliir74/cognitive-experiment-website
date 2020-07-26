@@ -10,8 +10,12 @@
             <PersonalInformation msg="Welcome to my cognitive experiment" v-show="step == 0"/>
             <Explain msg="Welcome to my cognitive experiment" v-show="step == 1"/>
             <Decision v-bind:msg="decision_msg" v-show="step == 2"/>
-            <Decision v-for="(it, index) in supervisor_numbers" v-bind:msg="supervisor_msg.replace('{0}', it)"
-                      :key="index" v-show="step == 3+index" v-bind:supervisor="true"></Decision>
+            <Decision v-for="(it, index) in god_numbers" v-bind:msg="god_msg.replace('{0}', it)"
+                      :key="index" v-show="step == 3+index" :value.sync="value[index]"></Decision>
+            <Decision v-for="(it, index) in god_numbers" :key="index"
+                      v-bind:msg="again_god_msg.replace('{0}', it).replace('{1}', value[index])"
+                      v-show="step == 3+god_numbers.length+index" v-bind:value="value[index]"
+                      v-bind:show_progress="true" v-bind:show_money="true"></Decision>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -44,8 +48,10 @@ export default {
   data () {
     return {
       decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟',
-      supervisor_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و 100 هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
-      supervisor_numbers: [30, 60, 100, 5]
+      god_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و 100 هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
+      again_god_msg: 'شما به کسی که {0} هزار تومن به نفر دوم داده بود {1} هزار تومن داده‌اید. در زیر میزان پول دو نفر را پس از تقسیم پول‌ها می‌بینید. اگر مایلید مقدار پول تقسیم کرده‌ی خود را عوض کنید.',
+      god_numbers: [30, 60, 100, 5],
+      value: [0, 0, 0, 0]
     }
   },
   components: {
@@ -60,7 +66,7 @@ export default {
     }
   },
   filters: {
-    supervisor_msg_format: function (msg, money) {
+    god_msg_format: function (msg, money) {
       return msg.replace(money)
     }
   }
@@ -69,6 +75,7 @@ export default {
 
 <style lang="scss">
   .card-body {
-    min-height: 40vh !important;
+    min-height: 45vh !important;
+    box-shadow: 1px 1px 2px white, 0 0 10px black, 0 0 3px white;
   }
 </style>

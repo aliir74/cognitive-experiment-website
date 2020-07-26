@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-card>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="input-group-1"
@@ -34,7 +34,7 @@
         ></b-form-input>
       </b-form-group>
     </b-form>
-  </div>
+  </b-card>
 </template>
 
 <script>
