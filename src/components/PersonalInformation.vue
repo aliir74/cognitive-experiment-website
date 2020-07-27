@@ -13,7 +13,7 @@
           type="email"
           required
           placeholder="ایمیل خود را وارد کنید"
-          @keyup="$emit('update:form', form);"
+          @change="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
 
@@ -23,7 +23,7 @@
           v-model="form.name"
           required
           placeholder="نام و نام خانوادگی"
-          @keyup="$emit('update:form', form);"
+          @change="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
 
@@ -33,7 +33,7 @@
           v-model="form.mobile"
           required
           placeholder="شماره موبایل"
-          @keyup="$emit('update:form', form);"
+          @change="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
     </b-form>

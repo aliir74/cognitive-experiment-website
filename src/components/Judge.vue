@@ -6,7 +6,7 @@
         <div>
             <b-input-group prepend="دگرخواه" append="خودخواه">
                 <b-form-input v-model="value" type="range" min="0" max="10"
-                              @keyup="$emit('update:value', value);"></b-form-input>
+                              @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
             <p>{{value}}</p>
         </div>

@@ -4,7 +4,7 @@
             {{ it }}
             <b-input-group prepend="کاملا مخالف" append="کاملا موافق">
                 <b-form-input v-model="value[index]" type="range" min="0" max="4"
-                              @keyup="$emit('update:value', value);"></b-form-input>
+                              @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
             <p>{{value[index]}}</p>
         </b-card-text>
