@@ -19,7 +19,7 @@
 
             <Decision v-for="(it, index) in god_numbers" :key="index"
                       v-bind:msg="again_god_msg.replace('{0}', it).replace('{1}', value[index])"
-                      v-show="step == 3+god_numbers.length+index" v-bind:value="value[index]"
+                      v-show="step == 3+god_numbers.length+index" v-bind:value="after_change_value[index]"
                       v-bind:show_progress="true" v-bind:show_money="true" v-bind:god_value="god_value"></Decision>
 
             <Judge v-for="(it, index) in god_numbers" :key="index"
@@ -69,6 +69,7 @@ export default {
       iri_msg: [' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.', ' وقتی من داستان جالب، یا رمانی را می خوانم ، تصور می کنم که اگر حوادث داستان برای من اتفاق می افتاد چه احساسی داشتم .', '  من واقعا با احساسات شخصیت های رمان درگیر شدم.'],
       god_numbers: [0],
       value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      after_change_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       judge_value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
       god_value: -1,
       iri_value: new Array(8),
@@ -96,7 +97,7 @@ export default {
   },
   methods: {
     disablePrevButton: function () {
-      if (this.step === 0) {
+      if (this.step === 0 || this.step === 3 + this.god_numbers.length) {
         return true
       }
       return false
@@ -129,6 +130,9 @@ export default {
         }).catch(error => {
           alert(error.message)
         })
+      } else if (this.step === 2 + this.god_numbers.length) {
+        this.after_change_value = this.value
+        this.step += 1
       } else {
         this.step += 1
       }
