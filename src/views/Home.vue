@@ -27,17 +27,19 @@
                    :value.sync="judge_value[index]"></Judge>
 
             <IRI v-show="step == 3+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
-            <Explain v-bind:show_image="false" msg="ممنون از وقتی که برای انجام آزمایش ما گذاشتی :)" v-show="step === 4+3*god_numbers.length"></Explain>
+            <Explain v-bind:show_image="false" msg="thankyou_msg" v-show="step === 4+3*god_numbers.length"></Explain>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
         <b-row class="vh-50" style="margin: 20px;">
           <b-col></b-col>
           <b-col>
-            <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()">{{next_text}}</b-button>
+            <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()"
+                      v-if="this.step <= 3+3*this.god_numbers.length">{{next_text}}</b-button>
           </b-col>
           <b-col>
-            <b-button variant="danger" v-on:click="step -= 1" :disabled="disablePrevButton()">قبلی</b-button>
+            <b-button variant="danger" v-on:click="step -= 1" :disabled="disablePrevButton()"
+                      v-if="this.step <= 3+3*this.god_numbers.length">قبلی</b-button>
           </b-col>
           <b-col></b-col>
         </b-row>
@@ -88,6 +90,7 @@ export default {
         'گاهی برای افرادی که مشکل دارند، احساس تاسف نمی کنم.',
         'مردم بیچاره و بدبخت معمولا مرا خیلی آشفته و مضطرب نمی کنند.',
         'من اغلب از چیزهایی که می بینم اتفاق می افتذ کاملا متاثر می شوم.'],
+      thankyou_msg: 'ممنون از وقتی که برای انجام آزمایش ما گذاشتی :)',
       god_numbers: [0],
       value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       after_change_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
