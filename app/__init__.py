@@ -34,6 +34,9 @@ def register():
     random.shuffle(god_numbers)
     values = [100, 200, 400]
     god_value = values[random.randint(0, 2)]
+    duplicate_user = mongo.db.users.find({'$or': [{'email': form_data.get('email')}, {'mobile': form_data.get('mobile')}]}).count()
+    if duplicate_user != 0:
+        return {}, 409
     mongo.db.users.insert_one({'email': form_data.get('email'),
                                'name': form_data.get('name'),
                                'mobile': form_data.get('mobile'),
@@ -49,8 +52,11 @@ def submit():
     data = request.get_json()
     user = mongo.db.users.find({'email': data['email']})
     user['value'] = data['value']
+    user['value_after_change'] = data['value_after_change']
     user['judge_value'] = data['judge_value']
     user['iri_value'] = data['iri_value']
+    user['dictator_value'] = data['dictator_value']
+    user.save()
 
 @app.route('/')
 def index_client():

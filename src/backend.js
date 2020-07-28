@@ -22,6 +22,10 @@ $axios.interceptors.response.use(function (response) {
 })
 
 export default {
+  submit (data) {
+    return $axios.post(`submit`, data)
+      .then(response => response.data)
+  },
   register (data) {
     return $axios.post(`register`, data)
       .then(response => response.data)
