@@ -40,6 +40,8 @@ def register():
     mongo.db.users.insert_one({'email': form_data.get('email'),
                                'name': form_data.get('name'),
                                'mobile': form_data.get('mobile'),
+                               'sex': form_data.get('sex'),
+                               'age': int(form_data.get('age')),
                                'god_numbers': god_numbers,
                                'god_value': god_value})
     return jsonify({'result': {

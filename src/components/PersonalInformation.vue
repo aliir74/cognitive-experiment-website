@@ -36,6 +36,19 @@
           @change="$emit('update:form', form);"
         ></b-form-input>
       </b-form-group>
+      <b-form-group id="input-group-4" label="سن:" label-for="input-4">
+        <b-form-input
+          id="input-4"
+          v-model="form.age"
+          required
+          type="number"
+          @change="$emit('update:form', form);"
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-5" label="جنسیت:" label-for="input-5">
+        <b-form-select v-model="form.sex" :options="['زن', 'مرد', 'دیگر']" id="input-5"
+          @change="$emit('update:form', form);"></b-form-select>
+      </b-form-group>
     </b-form>
   </b-card>
 </template>
@@ -47,7 +60,9 @@ export default {
       form: {
         email: '',
         name: '',
-        mobile: ''
+        mobile: '',
+        sex: '',
+        age: 0
       },
       show: true
     }

@@ -110,7 +110,9 @@ export default {
       person: {
         'name': '',
         'email': '',
-        'mobile': ''
+        'mobile': '',
+        'age': 0,
+        'sex': ''
       },
       help: 0,
       step: 0,
@@ -209,7 +211,8 @@ export default {
       if (!this.email_reg.test(this.person.email)) {
         return false
       }
-      return ((this.person.name.length !== 0) && (this.person.email.length !== 0) && (this.person.mobile.length !== 0))
+      return ((this.person.name.length !== 0) && (this.person.email.length !== 0) && (this.person.mobile.length !== 0) &&
+          (this.person.age !== 0) && (this.person.sex !== ''))
     }
   }
 }
