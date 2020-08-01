@@ -104,6 +104,7 @@ export default {
         'mobile': ''
       },
       step: 0,
+      step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     }
@@ -150,6 +151,10 @@ export default {
       return false
     },
     nextStep: function () {
+      if (this.step_time[this.step] === -1) {
+        this.step_time[this.step] = new Date().getTime()
+      }
+
       if (this.step === 0) {
         $backend.register({'person': this.person}).then(responseData => {
           this.god_numbers = responseData.result.god_numbers
@@ -176,7 +181,8 @@ export default {
           'dictator_value': this.dictator_value,
           'email': this.person.email,
           'mobile': this.person.mobile,
-          'name': this.person.name})
+          'name': this.person.name,
+          'step_time': this.step_time})
           .then(responseData => {
             this.step += 1
           })
