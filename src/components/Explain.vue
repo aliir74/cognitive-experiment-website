@@ -9,14 +9,12 @@
 
 <script>
 export default {
-  data () {
-    return {
-      show: true,
-      show_image: true
-    }
-  },
   props: {
-    msg: String
+    msg: String,
+    show_image: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>

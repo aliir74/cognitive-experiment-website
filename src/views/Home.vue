@@ -20,14 +20,14 @@
             <Decision v-for="(it, index) in god_numbers" :key="'second-deci'+index.toString()"
                       v-bind:msg="again_god_msg.replace('{0}', it).replace('{1}', value[index])"
                       v-show="step == 3+god_numbers.length+index" :value.sync="after_change_value[index]"
-                      v-bind:show_progress="true" v-bind:show_money="true" v-bind:god_value="god_value"></Decision>
+                      v-bind:show_progress="true" v-bind:show_money="true" v-bind:god_value="god_value" :god_number="it"></Decision>
 
             <Judge v-for="(it, index) in god_numbers" :key="'judge'+index.toString()"
                    v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index"
                    :value.sync="judge_value[index]"></Judge>
 
             <IRI v-show="step == 3+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
-            <Explain v-bind:show_image="false" msg="thankyou_msg" v-show="step === 4+3*god_numbers.length"></Explain>
+            <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 4+3*god_numbers.length"></Explain>
           </b-col>
           <b-col cols="2"></b-col>
         </b-row>
@@ -170,10 +170,13 @@ export default {
         this.step += 1
       } else if (this.step === 3 + 3 * this.god_numbers.length) {
         $backend.submit({'value': this.value,
-          'value_after_change': this.value_after_change,
+          'after_change_value': this.after_change_value,
           'iri_value': this.iri_value,
           'judge_value': this.judge_value,
-          'dictator_value': this.dictator_value})
+          'dictator_value': this.dictator_value,
+          'email': this.person.email,
+          'mobile': this.person.mobile,
+          'name': this.person.name})
           .then(responseData => {
             this.step += 1
           })

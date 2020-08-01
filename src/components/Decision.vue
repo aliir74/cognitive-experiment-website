@@ -4,8 +4,8 @@
             {{ msg }}
         </b-card-text>
         <div>
-            <b-input-group prepend="0" append="100" v-if="show_progress">
-                <b-form-input v-model="value" type="range" min="0" max="100"
+            <b-input-group prepend="0" :append="god_value" v-if="show_progress">
+                <b-form-input v-model="value" type="range" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
             <p style="padding-left: 20px" v-if="show_progress">{{value}}</p>
@@ -16,10 +16,10 @@
             </b-input-group>
         </div>
         <b-card-text v-if="show_money">
-            پول نفر اول: {{value}}
+            پول نفر اول: {{value-god_number+100}}
         </b-card-text>
         <b-card-text v-if="show_money">
-            پول نفر دوم: {{god_value-value}}
+            پول نفر دوم: {{god_value-value+god_number}}
         </b-card-text>
     </b-card>
 </template>
@@ -37,6 +37,7 @@ export default {
       type: Boolean,
       default: false
     },
+    god_number: Number,
     show_progress: {
       type: Boolean,
       default: false

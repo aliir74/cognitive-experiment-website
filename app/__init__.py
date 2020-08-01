@@ -50,13 +50,16 @@ def register():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()
-    user = mongo.db.users.find({'email': data['email']})
-    user['value'] = data['value']
-    user['value_after_change'] = data['value_after_change']
-    user['judge_value'] = data['judge_value']
-    user['iri_value'] = data['iri_value']
-    user['dictator_value'] = data['dictator_value']
-    user.save()
+    mongo.db.users.update_one({'email': data['email']}, {
+        "$set": {
+            "dictator_value": int(data['dictator_value']),
+            "after_change_value": [int(x) for x in data['after_change_value']],
+            "judge_value": [int(x) for x in data['judge_value']],
+            "iri_value": [int(x) for x in data['iri_value']],
+            "value": [int(x) for x in data['value']]
+        }
+    })
+    return 'OK', 200
 
 @app.route('/')
 def index_client():
