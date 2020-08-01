@@ -57,7 +57,8 @@ def submit():
             "judge_value": [int(x) for x in data['judge_value']],
             "iri_value": [int(x) for x in data['iri_value']],
             "value": [int(x) for x in data['value']],
-            "step_time": [int(x) for x in data['step_time']]
+            "step_time": [int(x) for x in data['step_time']],
+            "help": int(data['help'])
         }
     })
     return 'OK', 200

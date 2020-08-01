@@ -1,7 +1,16 @@
 <template>
   <b-container class="bv-example-row">
     <b-row class="vh-100 text-center" align-v="center">
-      <b-col></b-col>
+      <b-col>
+        <div>
+          <b-button v-b-modal.modal-1 :disabled="step < 2" @click="help += 1" class="btn-info">راهنما</b-button>
+
+          <b-modal id="modal-1" title="راهنما" hide-footer hide-header>
+            <Explain v-bind:msg="explain_msg.replace('{0}', god_value)"/>
+            <b-button class="mt-3 btn-success" block @click="$bvModal.hide('modal-1')">متوجه شدم</b-button>
+          </b-modal>
+        </div>
+      </b-col>
 
       <b-col cols="8">
         <b-row class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
@@ -103,6 +112,7 @@ export default {
         'email': '',
         'mobile': ''
       },
+      help: 0,
       step: 0,
       step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
@@ -118,7 +128,7 @@ export default {
   },
   methods: {
     disablePrevButton: function () {
-      if (this.step === 0 || this.step === 3 || this.step === 3 + this.god_numbers.length ||
+      if (this.step === 0 || this.step === 1 || this.step === 3 || this.step === 3 + this.god_numbers.length ||
               this.step === 3 + 2 * this.god_numbers.length || this.step === 3 + 3 * this.god_numbers.length) {
         return true
       }
@@ -151,6 +161,7 @@ export default {
       return false
     },
     nextStep: function () {
+      console.log(this.help)
       if (this.step_time[this.step] === -1) {
         this.step_time[this.step] = new Date().getTime()
       }
@@ -182,7 +193,8 @@ export default {
           'email': this.person.email,
           'mobile': this.person.mobile,
           'name': this.person.name,
-          'step_time': this.step_time})
+          'step_time': this.step_time,
+          'help': this.help})
           .then(responseData => {
             this.step += 1
           })
