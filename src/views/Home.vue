@@ -1,21 +1,24 @@
 <template>
   <b-container class="bv-example-row">
+
     <b-row class="vh-100 text-center" align-v="center">
       <b-col>
-        <div>
-          <b-button v-b-modal.modal-1 :disabled="step < 2" @click="help += 1" class="btn-info">راهنما</b-button>
 
-          <b-modal id="modal-1" title="راهنما" hide-footer hide-header>
-            <Explain v-bind:msg="explain_msg.replace('{0}', god_value)"/>
-            <b-button class="mt-3 btn-success" block @click="$bvModal.hide('modal-1')">متوجه شدم</b-button>
-          </b-modal>
-        </div>
       </b-col>
 
-      <b-col cols="8">
-        <b-row class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
-          <b-col cols="2"></b-col>
+      <b-col cols="12">
+        <b-row  class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
+          <b-col cols="1"></b-col>
+          <b-col style="position:absolute; z-index: 10; min-height: 70vh;" v-show="spinner" >
+            <div style="min-height: 100vh;" class="text-center" align-v="center">
+              <b-spinner style="margin: 50vh !important;" type="grow" label="Loading..."></b-spinner>
+            </div>
+          </b-col>
           <b-col>
+            <b-modal id="modal-1" title="راهنما" hide-footer hide-header>
+              <Explain v-bind:msg="explain_msg.replace('{0}', god_value)"/>
+              <b-button class="mt-3 btn-success" block @click="$bvModal.hide('modal-1')">متوجه شدم</b-button>
+            </b-modal>
             <PersonalInformation :form.sync="person" v-show="step == 0"/>
 
             <Explain v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1"/>
@@ -38,13 +41,16 @@
             <IRI v-show="step == 3+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
             <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 4+3*god_numbers.length"></Explain>
           </b-col>
-          <b-col cols="2"></b-col>
+          <b-col cols="1"></b-col>
         </b-row>
         <b-row class="vh-50" style="margin: 20px;">
           <b-col></b-col>
           <b-col>
             <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()"
                       v-if="this.step <= 3+3*this.god_numbers.length">{{next_text}}</b-button>
+          </b-col>
+          <b-col>
+            <b-button v-b-modal.modal-1 @click="help += 1" class="btn-info" v-if="step >= 0">راهنما</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-on:click="step -= 1" :disabled="disablePrevButton()"
@@ -73,6 +79,7 @@ export default {
   name: 'home',
   data () {
     return {
+      spinner: false,
       explain_msg: 'فرض کنید که شما 100 هزار تومن پول دارین و قراره اون رو با یه نفر دیگه تقسیم کنین. شما هر قدر که دوست داشته باشین می‌تونین پول رو برای خودتون نگه دارین و باقی رو به نفر دیگه بدین.\nیه نفر دیگه هم تو جمع ما وجود داره که بهش می‌گیم ناظر. ناظر {0} هزار تومن پول داره که بعد از تقسیم کردن پول توسط شما، پول خودش رو بین شما و نفر دیگه تقسیم می‌کنه و شما اطلاعاتی در مورد تصمیم‌های قبلیش ندارین. بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما شخص اول هستین و مقداری از پولتون رو به شخص دوم می‌دین.',
       decision_msg: '        اگر فقط یکبار فرصت داشته باشین که پول رو تقسیم کنین، چه مقدار از پول رو به طرف مقابل می‌دین؟ (از 0 تا 100)',
       god_msg: 'حالا فرض کنین شما ناظر آزمایش قبل هستین و {1} هزار تومن پول در اختیار دارین. اگر نفر اول {0} هزار تومن به نفر دوم داده باشه شما به نفر اول چقدر پول میدین؟',
@@ -162,8 +169,18 @@ export default {
       // }
       return false
     },
-    nextStep: function () {
-      console.log(this.help)
+    sleep: function (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    prevStep: async function () {
+      this.spinner = true
+      await this.sleep(1000)
+      this.spinner = false
+      this.step -= 1
+    },
+    nextStep: async function () {
+      this.spinner = true
+      await this.sleep(1000)
       if (this.step_time[this.step] === -1) {
         this.step_time[this.step] = new Date().getTime()
       }
@@ -206,13 +223,14 @@ export default {
       } else {
         this.step += 1
       }
+      this.spinner = false
     },
     checkFormValidity: function () {
       if (!this.email_reg.test(this.person.email)) {
         return false
       }
-      return ((this.person.name.length !== 0) && (this.person.email.length !== 0) && (this.person.mobile.length !== 0) &&
-          (this.person.age !== 0) && (this.person.sex !== ''))
+      return ((this.person.name !== '') && (this.person.email !== '') && (this.person.mobile !== '') &&
+          (!isNaN(this.person.mobile)) && (this.person.age !== '') && (this.person.age > 0) && (this.person.sex !== ''))
     }
   }
 }
@@ -222,5 +240,8 @@ export default {
   .card-body {
     min-height: 45vh !important;
     box-shadow: 1px 1px 2px white, 0 0 10px black, 0 0 3px white;
+  }
+  .modal-dialog {
+    max-width: 50vw !important;
   }
 </style>

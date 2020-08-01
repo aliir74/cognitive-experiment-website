@@ -1,9 +1,9 @@
 <template>
   <b-card img-right>
-      <b-card-img v-show="show_image" :src="require('../assets/image.png')"></b-card-img>
       <b-card-text class="text-right">
           {{msg}}
       </b-card-text>
+      <b-card-img v-show="show_image" :src="require('../assets/image.png')"></b-card-img>
     </b-card>
 </template>
 
