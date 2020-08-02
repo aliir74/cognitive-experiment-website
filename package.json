@@ -8,11 +8,6 @@
     "lint": "vue-cli-service lint",
     "postinstall": "yarn build"
   },
-  "engines": {
-    "node": "10.17.0",
-    "npm": "6.11.3",
-    "yarn": "1.22.4"
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.5.0",
