@@ -8,18 +8,18 @@
                 <b-form-input v-model="value" type="range" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
-            <p style="padding-left: 20px" v-if="show_progress">{{value}}</p>
+<!--            <p style="padding-left: 20px" v-if="show_progress">{{value}}</p>-->
 
-            <b-input-group style="width: 70px; margin: auto" v-if="!show_progress">
-                <b-form-input type="number" v-model="value"
+            <b-input-group style="width: 70px; margin: auto; margin-top: 20px; margin-bottom: 20px;">
+                <b-form-input type="number" v-model="value" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
         </div>
         <b-card-text v-if="show_money">
-            پول نفر اول: {{value-god_number+100}}
+            پول نفر اول: {{value-god_number+100}} هزار تومن
         </b-card-text>
         <b-card-text v-if="show_money">
-            پول نفر دوم: {{god_value-value+god_number}}
+            پول نفر دوم: {{god_value-value+god_number}} هزار تومن
         </b-card-text>
     </b-card>
 </template>
