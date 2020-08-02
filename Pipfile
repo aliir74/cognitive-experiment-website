@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+werkzeug = "==0.16.1"
 gunicorn = "==19.7.1"
 flask-restplus = "*"
 python-dotenv = "*"
@@ -11,6 +12,7 @@ flask = "*"
 Flask-PyMongo = "*"
 
 [dev-packages]
+werkzeug = "==0.16.1"
 pytest = "*"
 bumpversion = "*"
 pytest-sugar = "*"
