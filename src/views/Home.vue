@@ -140,6 +140,21 @@ export default {
     }
   },
   methods: {
+    detectMob: function () {
+      const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+      ]
+
+      return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem)
+      })
+    },
     disablePrevButton: function () {
       if (this.step === 0 || this.step === 1 || this.step === 3 || this.step === 3 + this.god_numbers.length ||
               this.step === 3 + 2 * this.god_numbers.length || this.step === 3 + 3 * this.god_numbers.length) {
@@ -219,7 +234,8 @@ export default {
           'step_time': this.step_time,
           'help': this.help,
           'complete': true,
-          'step_presence': this.step_presence})
+          'step_presence': this.step_presence,
+          'is_mobile': this.detectMob()})
           .then(responseData => {
             this.step += 1
           })
