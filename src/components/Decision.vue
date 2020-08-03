@@ -1,19 +1,18 @@
 <template>
     <b-card img-right>
-        <b-card-text>
-            {{ msg }}
+        <b-card-text v-html="msg">
         </b-card-text>
         <div>
             <b-input-group prepend="0" :append="god_value" v-if="show_progress">
                 <b-form-input v-model="value" type="range" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
-<!--            <p style="padding-left: 20px" v-if="show_progress">{{value}}</p>-->
 
             <b-input-group style="width: 70px; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                 <b-form-input type="number" v-model="value" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
+          <p style="padding-left: 0px" v-if="!show_progress">{{value}} هزار تومن</p>
         </div>
         <b-card-text v-if="show_money">
             پول نفر اول: {{value-god_number+100}} هزار تومن

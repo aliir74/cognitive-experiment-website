@@ -34,19 +34,35 @@ def register():
     random.shuffle(god_numbers)
     values = [100, 200, 400]
     god_value = values[random.randint(0, 2)]
-    duplicate_user = mongo.db.users.find({'$or': [{'email': form_data.get('email')}, {'mobile': form_data.get('mobile')}]}).count()
-    if duplicate_user != 0:
-        return {}, 409
-    mongo.db.users.insert_one({'email': form_data.get('email'),
+    try_to_answer = 1
+    duplicate_user = mongo.db.users.find({'$or': [{'email': form_data.get('email')}]})
+    if duplicate_user.count() != 0:
+        user = duplicate_user[0]
+        if user.get('complete', False):
+            return {}, 409
+        else:
+            god_numbers = user['god_numbers']
+            god_value = user['god_value']
+            try_to_answer = user.get('try_to_answer', 1)+1
+            mongo.db.users.update_one({'email': form_data.get('email')}, {
+                '$set': {
+                    'try_to_answer': try_to_answer
+                }
+            })
+    else:
+        mongo.db.users.insert_one({'email': form_data.get('email'),
                                'name': form_data.get('name'),
                                'mobile': form_data.get('mobile'),
                                'sex': form_data.get('sex'),
                                'age': int(form_data.get('age')),
                                'god_numbers': god_numbers,
-                               'god_value': god_value})
+                               'god_value': god_value,
+                               'try_to_answer': try_to_answer,
+                               'complete': False})
     return jsonify({'result': {
         'god_numbers': god_numbers,
-        'god_value': god_value
+        'god_value': god_value,
+        'try_to_answer': try_to_answer
     }})
 
 @app.route('/submit', methods=['POST'])
@@ -60,7 +76,9 @@ def submit():
             "iri_value": [int(x) for x in data['iri_value']],
             "value": [int(x) for x in data['value']],
             "step_time": [int(x) for x in data['step_time']],
-            "help": int(data['help'])
+            "help": int(data['help']),
+            "complete": bool(data['complete']),
+            "step_presence": [int(x) for x in data['step_presence']]
         }
     })
     return 'OK', 200

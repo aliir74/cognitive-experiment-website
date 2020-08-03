@@ -1,7 +1,6 @@
 <template>
     <b-card img-right>
-        <b-card-text>
-            {{ msg }}
+        <b-card-text v-html="msg">
         </b-card-text>
         <div>
             <b-input-group prepend="دگرخواه" append="خودخواه">
