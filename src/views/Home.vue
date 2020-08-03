@@ -121,7 +121,7 @@ export default {
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
-      step: 0,
+      step: 1,
       step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
@@ -163,6 +163,10 @@ export default {
       return false
     },
     disableNextButton: function () {
+      if ((this.dictator_value === '') || (this.value.indexOf('') !== -1) ||
+          (this.judge_value.indexOf('') !== -1) || (this.after_change_value.indexOf('') !== -1)) {
+        return true
+      }
       if (this.step === 0) {
         return !this.checkFormValidity()
       }
