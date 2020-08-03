@@ -2,11 +2,7 @@
   <b-container class="bv-example-row">
 
     <b-row class="vh-100 text-center" align-v="center">
-      <b-col>
-
-      </b-col>
-
-      <b-col cols="12">
+      <b-col class="col-md-12 col-sm-12">
         <b-row  class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
           <b-col cols="1"></b-col>
           <b-col style="position:absolute; z-index: 10; min-height: 70vh;" v-show="spinner" >
@@ -44,23 +40,19 @@
           <b-col cols="1"></b-col>
         </b-row>
         <b-row class="vh-50" style="margin: 20px;">
-          <b-col></b-col>
           <b-col>
             <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()"
                       v-if="this.step <= 3+3*this.god_numbers.length">{{next_text}}</b-button>
           </b-col>
           <b-col>
-            <b-button v-b-modal.modal-1 @click="help += 1" class="btn-info" v-if="step >= 0">راهنما</b-button>
+            <b-button v-b-modal.modal-1 @click="help += 1" class="btn-info" v-if="step >= 2">راهنما</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-on:click="prevStep()" :disabled="disablePrevButton()"
                       v-if="this.step <= 3+3*this.god_numbers.length">قبلی</b-button>
           </b-col>
-          <b-col></b-col>
         </b-row>
       </b-col>
-
-      <b-col></b-col>
     </b-row>
 
   </b-container>
@@ -130,7 +122,7 @@ export default {
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
-      step: 0,
+      step: 1,
       step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
@@ -146,7 +138,6 @@ export default {
   watch: {
     step: function () {
       this.step_presence[this.step] += 1
-      console.log(this.step_presence)
     }
   },
   methods: {
@@ -263,5 +254,9 @@ export default {
   .numbers {
     //color: green;
     font-weight: bold;
+  }
+  .modal-dialog {
+    max-width: 80vw !important;
+    margin: auto !important;
   }
 </style>
