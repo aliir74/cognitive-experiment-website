@@ -1,14 +1,13 @@
 <template>
-  <b-container class="vw-100" >
-
+  <b-container>
+    <b-row style="position:absolute; z-index: 10; right: 50%; top: 50%;" v-show="spinner" >
+            <div class="text-center" align-v="center">
+              <b-spinner style="margin: auto;" type="grow" label="Loading..."></b-spinner>
+            </div>
+    </b-row>
     <b-row class="vh-100 text-center" align-v="center">
       <b-col class="col-md-12 col-sm-12" >
         <b-row  class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
-          <b-col style="position:absolute; z-index: 10; min-height: 70vh;" v-show="spinner" >
-            <div style="min-height: 100vh;" class="text-center" align-v="center">
-              <b-spinner style="margin: 50vh !important;" type="grow" label="Loading..."></b-spinner>
-            </div>
-          </b-col>
           <b-col>
             <b-modal id="modal-1" title="راهنما" hide-footer hide-header>
               <Explain v-bind:msg="explain_msg.replace('{0}', god_value)"/>
@@ -37,7 +36,6 @@
             <IRI v-show="step == 4+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
             <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 5+3*god_numbers.length"></Explain>
           </b-col>
-          <b-col cols="1"></b-col>
         </b-row>
         <b-row class="vh-50" style="margin: 20px;">
           <b-col>
@@ -125,7 +123,7 @@ export default {
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
-      step: 0,
+      step: 1,
       step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
