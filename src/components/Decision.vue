@@ -8,7 +8,7 @@
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
 
-            <b-input-group style="width: 70px; margin: auto; margin-top: 20px; margin-bottom: 20px;">
+            <b-input-group style="width: 3.2rem; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                 <b-form-input type="number" v-model="value" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>

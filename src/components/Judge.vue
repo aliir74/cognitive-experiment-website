@@ -7,7 +7,11 @@
                 <b-form-input v-model="value" type="range" min="-5" max="5"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
-            <p>{{value}}</p>
+            <b-input-group style="width: 3rem; margin: auto; margin-top: 20px; margin-bottom: 20px;">
+                <b-form-input type="number" v-model="value" min="-5" max="5"
+                              @change="$emit('update:value', value);"></b-form-input>
+            </b-input-group>
+<!--            <p>{{value}}</p>-->
         </div>
     </b-card>
 </template>

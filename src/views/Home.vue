@@ -1,10 +1,9 @@
 <template>
-  <b-container class="bv-example-row">
+  <b-container class="vw-100" >
 
     <b-row class="vh-100 text-center" align-v="center">
-      <b-col class="col-md-12 col-sm-12">
+      <b-col class="col-md-12 col-sm-12" >
         <b-row  class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
-          <b-col cols="1"></b-col>
           <b-col style="position:absolute; z-index: 10; min-height: 70vh;" v-show="spinner" >
             <div style="min-height: 100vh;" class="text-center" align-v="center">
               <b-spinner style="margin: 50vh !important;" type="grow" label="Loading..."></b-spinner>
@@ -19,7 +18,7 @@
 
             <Explain v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1"/>
 
-            <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" v-show="step == 2"/>
+            <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" :god_value="100" v-show="step == 2"/>
 
             <Decision v-for="(it, index) in god_numbers"
                       v-bind:msg="god_msg.replace('{0}', it).replace('{1}', god_value)"
@@ -122,7 +121,7 @@ export default {
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
-      step: 1,
+      step: 0,
       step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
@@ -248,15 +247,12 @@ export default {
     min-height: 45vh !important;
     box-shadow: 1px 1px 2px white, 0 0 10px black, 0 0 3px white;
   }
-  .modal-dialog {
-    max-width: 50vw !important;
-  }
   .numbers {
     //color: green;
     font-weight: bold;
   }
   .modal-dialog {
-    max-width: 80vw !important;
+    //max-width: 80vw !important;
     margin: auto !important;
   }
 </style>
