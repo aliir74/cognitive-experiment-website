@@ -32,23 +32,25 @@
             <Judge v-for="(it, index) in god_numbers" :key="'judge'+index.toString()"
                    v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index"
                    :value.sync="judge_value[index]"></Judge>
-
-            <IRI v-show="step == 3+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
-            <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 4+3*god_numbers.length"></Explain>
+            <Decision v-bind:msg="dictator_again_msg.replace('{0}', dictator_value)" :value.sync="dictator_again"
+                      :god_value="100" v-show="step == 3+3*god_numbers.length" :show_progress="true"/>
+            <IRI v-show="step == 4+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
+            <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 5+3*god_numbers.length"></Explain>
           </b-col>
           <b-col cols="1"></b-col>
         </b-row>
         <b-row class="vh-50" style="margin: 20px;">
           <b-col>
             <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()"
-                      v-if="this.step <= 3+3*this.god_numbers.length">{{next_text}}</b-button>
+                      v-if="this.step <= 4+3*this.god_numbers.length">{{next_text}}</b-button>
           </b-col>
           <b-col>
-            <b-button v-b-modal.modal-1 @click="help += 1" class="btn-info" v-if="step >= 2">راهنما</b-button>
+            <b-button v-b-modal.modal-1 @click="help += 1" class="btn-info"
+                      v-if="step >= 2 && step <= 4+3*this.god_numbers.length">راهنما</b-button>
           </b-col>
           <b-col>
             <b-button variant="danger" v-on:click="prevStep()" :disabled="disablePrevButton()"
-                      v-if="this.step <= 3+3*this.god_numbers.length">قبلی</b-button>
+                      v-if="this.step <= 4+3*this.god_numbers.length">قبلی</b-button>
           </b-col>
         </b-row>
       </b-col>
@@ -76,6 +78,7 @@ export default {
       god_msg: 'حالا فرض کنید شما ناظر آزمایش قبل هستید و <span class="numbers">{1} هزار تومن</span> پول در اختیار دارید. اگر نفر اول <span class="numbers">{0} هزار تومن</span> به نفر دوم داده باشه شما به نفر اول چقدر پول میدید؟',
       again_god_msg: 'شما به کسی که <span class="numbers">{0} هزار تومن</span> به نفر دوم داده بود <span class="numbers">{1} هزار تومن</span> داده‌اید. در زیر میزان پول دو نفر را پس از تقسیم پول‌ها می‌بینید. اگر مایلید مقدار پول تقسیم کرده‌ی خود را عوض کنید.',
       judge_msg: 'فرض کنید نفر اول به نفر دوم <span class="numbers">{0} هزار تومن</span> پول داده است. به میزان خودخواهی نفر اول از -5 تا 5 نمره دهید.',
+      dictator_again_msg: 'شما وقتی در جایگاه نفر اول بودید <span class="numbers">{0} هزار تومن</span> به نفر دوم دادید. آیا می‌خواهید تصمیم خود را عوض کنید؟',
       iri_msg: ['تقریبا به طور معمول درباره‌ی اتفاقاتی که ممکن است برایم رخ دهد، خیال‌پردازی و خیال‌بافی می‌کنم.',
         'اغلب نسبت به افرادی که کمتر از من خوشبخت هستند احساس دلسوزی و نگرانی می‌کنم.',
         'گاهی دیدن مسائل از نقطه‌نظر فردی دیگر برایم دشوار است.',
@@ -112,6 +115,7 @@ export default {
       god_value: 95,
       iri_value: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
       dictator_value: 0,
+      dictator_again: 0,
       person: {
         'name': '',
         'email': '',
@@ -119,10 +123,10 @@ export default {
         'age': 0,
         'sex': ''
       },
-      step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
-      step: 1,
-      step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      step: 0,
+      step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     }
@@ -157,23 +161,22 @@ export default {
     },
     disablePrevButton: function () {
       if (this.step === 0 || this.step === 1 || this.step === 3 || this.step === 3 + this.god_numbers.length ||
-              this.step === 3 + 2 * this.god_numbers.length || this.step === 3 + 3 * this.god_numbers.length) {
+              this.step === 3 + 2 * this.god_numbers.length || this.step === 3 + 3 * this.god_numbers.length ||
+              this.step === 4 + 3 * this.god_numbers.length) {
         return true
       }
       return false
     },
     disableNextButton: function () {
       if ((this.dictator_value === '') || (this.value.indexOf('') !== -1) ||
-          (this.judge_value.indexOf('') !== -1) || (this.after_change_value.indexOf('') !== -1)) {
+          (this.judge_value.indexOf('') !== -1) || (this.after_change_value.indexOf('') !== -1) ||
+          this.dictator_again === '') {
         return true
       }
       if (this.step === 0) {
         return !this.checkFormValidity()
       }
       if (this.step === 2) {
-        // if (this.dictator_value === '') {
-        //   return true
-        // }
         return !(this.dictator_value >= 0 && this.dictator_value <= 100)
       }
       if (this.step >= 3 && this.step <= 3 + this.god_numbers.length - 1) {
@@ -220,18 +223,22 @@ export default {
             alert(error.message)
           }
         })
+      } else if (this.step === 2) {
+        this.dictator_again = this.dictator_value
+        this.step += 1
       } else if (this.step === 2 + this.god_numbers.length) {
         this.after_change_value = [...this.value]
         this.step += 1
-      } else if (this.step === 2 + 3 * this.god_numbers.length) {
+      } else if (this.step === 3 + 3 * this.god_numbers.length) {
         this.next_text = 'ارسال جواب‌ها'
         this.step += 1
-      } else if (this.step === 3 + 3 * this.god_numbers.length) {
+      } else if (this.step === 4 + 3 * this.god_numbers.length) {
         $backend.submit({'value': this.value,
           'after_change_value': this.after_change_value,
           'iri_value': this.iri_value,
           'judge_value': this.judge_value,
           'dictator_value': this.dictator_value,
+          'dictator_again': this.dictator_again,
           'email': this.person.email,
           'mobile': this.person.mobile,
           'name': this.person.name,
