@@ -14,12 +14,18 @@
             </b-input-group>
           <p style="padding-left: 0px" v-if="!show_progress">{{value}} هزار تومن</p>
         </div>
-        <b-card-text v-if="show_money">
-            پول نفر اول: {{value-god_number+100}} هزار تومن
-        </b-card-text>
-        <b-card-text v-if="show_money">
-            پول نفر دوم: {{god_value-value+god_number}} هزار تومن
-        </b-card-text>
+        <b-row>
+          <b-col>
+            <b-card-text v-if="show_money">
+                پول نفر دوم: {{god_value-value+god_number}} هزار تومن
+            </b-card-text>
+          </b-col>
+          <b-col>
+            <b-card-text v-if="show_money">
+                پول نفر اول: {{value-god_number+100}} هزار تومن
+            </b-card-text>
+          </b-col>
+        </b-row>
     </b-card>
 </template>
 
