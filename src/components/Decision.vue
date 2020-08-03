@@ -3,7 +3,7 @@
         <b-card-text v-html="msg">
         </b-card-text>
         <div>
-            <b-input-group prepend="0" :append="god_value" v-if="show_progress">
+            <b-input-group prepend="0" :append="god_value.toString()" v-if="show_progress">
                 <b-form-input v-model="value" type="range" min="0" :max="god_value"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
