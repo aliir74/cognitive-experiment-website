@@ -13,27 +13,27 @@
               <Explain v-bind:msg="help_msg.replace('{0}', god_value)" dir="rtl"/>
               <b-button class="mt-3 btn-success" block @click="$bvModal.hide('modal-1')">متوجه شدم</b-button>
             </b-modal>
-            <PersonalInformation :form.sync="person" v-show="step == 0"/>
+            <PersonalInformation :form.sync="person" v-show="step == 0 && !spinner"/>
 
-            <Explain v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1"/>
+            <Explain v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1 && !spinner"/>
 
-            <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" :god_value="100" v-show="step == 2"/>
+            <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" :god_value="100" v-show="step == 2 && !spinner"/>
 
             <Decision v-for="(it, index) in god_numbers"
                       v-bind:msg="god_msg.replace('{0}', it).replace('{1}', god_value)"
-                      :key="'first-deci'+index.toString()" v-show="step == 3+index" :value.sync="value[index]"></Decision>
+                      :key="'first-deci'+index.toString()" v-show="step == 3+index && !spinner" :value.sync="value[index]"></Decision>
 
             <Decision v-for="(it, index) in god_numbers" :key="'second-deci'+index.toString()"
                       v-bind:msg="again_god_msg.replace('{0}', it).replace('{1}', value[index])"
-                      v-show="step == 3+god_numbers.length+index" :value.sync="after_change_value[index]"
+                      v-show="step == 3+god_numbers.length+index && !spinner" :value.sync="after_change_value[index]"
                       v-bind:show_progress="true" v-bind:show_money="true" v-bind:god_value="god_value" :god_number="it"></Decision>
 
             <Judge v-for="(it, index) in god_numbers" :key="'judge'+index.toString()"
-                   v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index"
+                   v-bind:msg="judge_msg.replace('{0}', it)" v-show="step == 3+2*god_numbers.length+index && !spinner"
                    :value.sync="judge_value[index]"></Judge>
             <Decision v-bind:msg="dictator_again_msg.replace('{0}', dictator_value)" :value.sync="dictator_again"
-                      :god_value="100" v-show="step == 3+3*god_numbers.length" :show_progress="true"/>
-            <IRI v-show="step == 4+3*god_numbers.length" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
+                      :god_value="100" v-show="step == 3+3*god_numbers.length && !spinner" :show_progress="true"/>
+            <IRI v-show="step == 4+3*god_numbers.length && !spinner" v-bind:msg="iri_msg" :value.sync="iri_value"></IRI>
             <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 5+3*god_numbers.length"></Explain>
           </b-col>
         </b-row>
@@ -126,7 +126,7 @@ export default {
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       step_sequence: [0],
       help: 0,
-      step: 1,
+      step: 0,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
