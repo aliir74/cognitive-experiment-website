@@ -111,7 +111,7 @@ export default {
       after_change_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       judge_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       god_value: 95,
-      iri_value: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      iri_value: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
       dictator_value: 0,
       dictator_again: 0,
       person: {
@@ -124,7 +124,7 @@ export default {
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       step_sequence: [0],
       help: 0,
-      step: 0,
+      step: 2,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
@@ -187,13 +187,13 @@ export default {
         // }
         return !(this.value[valueIndex] >= 0 && this.value[valueIndex] <= this.god_value)
       }
-      // if (this.step === 3 + 3 * this.god_numbers.length) {
-      //   for (let i; i <= this.iri_value.length; i++) {
-      //     if (this.iri_value[i] === undefined) {
-      //       return true
-      //     }
-      //   }
-      // }
+      if (this.step === 4 + 3 * this.god_numbers.length) {
+        for (let i = 0; i <= this.iri_value.length; i++) {
+          if (this.iri_value[i] === '') {
+            return true
+          }
+        }
+      }
       return false
     },
     sleep: function (ms) {
