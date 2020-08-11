@@ -5,11 +5,11 @@
         <div>
             <b-input-group dir="ltr" prepend="خودخواه" append="دگرخواه">
                 <b-form-input  v-model.number="value" type="range" min="-5" max="5"
-                              @change="$emit('update:value', value);"></b-form-input>
+                              @input="$emit('update:value', value);"></b-form-input>
             </b-input-group>
             <b-input-group style="width: 3rem; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                 <b-form-input type="number" v-model.number="value" min="-5" max="5"
-                              @change="$emit('update:value', value);"></b-form-input>
+                              @input="$emit('update:value', value);"></b-form-input>
             </b-input-group>
 <!--            <p>{{value}}</p>-->
         </div>

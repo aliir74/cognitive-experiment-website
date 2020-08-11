@@ -5,14 +5,14 @@
         <div>
             <b-input-group dir="ltr" prepend="0" :append="god_value.toString()" v-if="show_progress">
                 <b-form-input v-model.number="value" type="range" min="0" :max="god_value"
-                              @change="$emit('update:value', value);"></b-form-input>
+                              @input="$emit('update:value', value);"></b-form-input>
             </b-input-group>
 
             <b-input-group style="width: 3.2rem; margin: auto; margin-top: 20px; margin-bottom: 20px;">
                 <b-form-input type="number" v-model.number="value" min="0" :max="god_value"
-                              @change="$emit('update:value', value);"></b-form-input>
+                              @input="$emit('update:value', value);"></b-form-input>
             </b-input-group>
-          <p style="padding-left: 0px" v-if="!show_progress">{{value}} هزار تومن</p>
+          <p style="padding-left: 0;" v-if="!show_progress">{{value}} هزار تومن</p>
         </div>
         <b-row>
           <b-col>

@@ -39,7 +39,7 @@
         </b-row>
         <b-row style="margin: 20px;">
           <b-col style="margin: auto" v-show="step > 1 && step <= 3+3*god_numbers.length">
-             <b-form-checkbox v-model="not_change">نمی‌خواهم تغییر دهم</b-form-checkbox>
+             <b-form-checkbox v-model="not_change">مقدار پیش‌فرض را تغییر نمی‌دهم.</b-form-checkbox>
           </b-col>
           <b-col></b-col>
           <b-col></b-col>
@@ -135,7 +135,7 @@ export default {
         false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       step_sequence: [0],
       help: 0,
-      step: 0,
+      step: 1,
       first_after_value_13: false,
       not_change: false,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
@@ -152,6 +152,8 @@ export default {
   },
   watch: {
     step: function (newStep, oldStep) {
+      console.log(this.value)
+      console.log(this.after_change_value)
       this.step_change[oldStep] = true
       // console.log('step', this.step)
       this.step_time[this.step].push(new Date().getTime())
@@ -168,10 +170,10 @@ export default {
       }
     },
     dictator_value: function () {
-      this.step_change[this.step] = true
+      this.step_change[2] = true
     },
     dictator_again: function () {
-      this.step_change[this.step] = true
+      this.step_change[3 + 3 * this.god_numbers.length] = true
     },
     value: {
       deep: true,
@@ -233,10 +235,10 @@ export default {
     },
     disableNextButton: function () {
       if (this.step >= 2 && this.step <= 3 + 3 * this.god_numbers.length) { // Must check `dont want to change`
-        // console.log('step disable', this.step)
-        // console.log('step change in disable', this.step_change)
-        // console.log(this.step_change[this.step])
-        // console.log(this.not_change)
+        console.log('step disable', this.step)
+        console.log('step change in disable', this.step_change)
+        console.log(this.step_change[this.step])
+        console.log(this.not_change)
         if (this.step_change[this.step] !== true && this.not_change === false) {
           return true
         }
