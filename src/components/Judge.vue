@@ -3,7 +3,7 @@
         <b-card-text v-html="msg">
         </b-card-text>
         <div>
-            <b-input-group dir="ltr" prepend="دگرخواه" append="خودخواه">
+            <b-input-group dir="ltr" prepend="خودخواه" append="دگرخواه">
                 <b-form-input  v-model="value" type="range" min="-5" max="5"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
