@@ -10,12 +10,12 @@
         <b-row  class="vh-70" style="min-height: 70vh !important; margin-top: 20px;">
           <b-col>
             <b-modal id="modal-1" title="راهنما" hide-footer hide-header>
-              <Explain v-bind:msg="help_msg.replace('{0}', god_value)" dir="rtl"/>
+              <Explain :god_value="god_value" v-bind:msg="help_msg.replace('{0}', god_value)" dir="rtl"/>
               <b-button class="mt-3 btn-success" block @click="$bvModal.hide('modal-1')">متوجه شدم</b-button>
             </b-modal>
             <PersonalInformation :form.sync="person" v-show="step == 0 && !spinner"/>
 
-            <Explain v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1 && !spinner"/>
+            <Explain :god_value="god_value" v-bind:msg="explain_msg.replace('{0}', god_value)" v-show="step == 1 && !spinner"/>
 
             <Decision v-bind:msg="decision_msg" :value.sync="dictator_value" :god_value="100" v-show="step == 2 && !spinner"/>
 
@@ -119,7 +119,7 @@ export default {
       value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       after_change_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       judge_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      god_value: 95,
+      god_value: 200,
       iri_value: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
       dictator_value: 0,
       dictator_again: 0,
