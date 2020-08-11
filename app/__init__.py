@@ -81,7 +81,9 @@ def submit():
             "step_presence": [int(x) for x in data['step_presence']],
             "is_mobile": bool(data['is_mobile']),
             "dictator_again": int(data['dictator_again']),
-            "step_sequence": data['step_sequence']
+            "step_sequence": data['step_sequence'],
+            "send_time": data['send_time'],
+            "step_change": data['step_change']
         }
     })
     return 'OK', 200

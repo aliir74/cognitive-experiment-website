@@ -136,6 +136,7 @@ export default {
       step_sequence: [0],
       help: 0,
       step: 1,
+      first_after_value_13: false,
       not_change: false,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       next_text: 'بعدی',
@@ -149,51 +150,10 @@ export default {
     Explain,
     Decision
   },
-  mounted () {
-    var vm = this
-    this.value.forEach((index, val) => {
-      vm.$watch(['value', index].join('.'), (newVal, oldVal) => {
-        console.info('arr_of_numbers', newVal, oldVal)
-        console.log(vm.step_change)
-        vm.disableNextButton()
-        vm.step_change[3 + index] = true
-      })
-    })
-    this.after_change_value.forEach((index, val) => {
-      vm.$watch(['after_change_value', index].join('.'), (newVal, oldVal) => {
-        console.info('arr_of_numbers2', newVal, oldVal)
-        vm.step_change[3 + this.god_numbers.length + index] = true
-      })
-    })
-    this.judge_value.forEach((index, val) => {
-      vm.$watch(['judge_value', index].join('.'), (newVal, oldVal) => {
-        console.info('arr_of_numbers3', newVal, oldVal)
-        vm.step_change[3 + 2 * this.god_numbers.length + index] = true
-      })
-    })
-  },
-  // computed: {
-  //   computedValue: function () {
-  //     console.log('hellooo')
-  //     return this.value
-  //   }
-  // },
   watch: {
-    // computedValue: {
-    //   deep: true,
-    //   handler: function (oldValue, newValue) {
-    //     console.log('byyyy')
-    //     console.log(oldValue)
-    //     for (let i = 0; i < this.value.length; i++) {
-    //       if (oldValue[i] !== newValue[i]) {
-    //         this.step_change[3 + i] = true
-    //         console.log(3 + i)
-    //       }
-    //     }
-    //   }
-    // },
     step: function (newStep, oldStep) {
-      console.log(this.step)
+      this.step_change[oldStep] = true
+      // console.log('step', this.step)
       this.step_time[this.step].push(new Date().getTime())
       this.step_presence[this.step] += 1
       this.step_sequence.push(this.step)
@@ -208,10 +168,43 @@ export default {
       }
     },
     dictator_value: function () {
-      this.step_change[2] = true
+      this.step_change[this.step] = true
     },
     dictator_again: function () {
-      this.step_change[3 + 3 * this.god_numbers.length] = true
+      this.step_change[this.step] = true
+    },
+    value: {
+      deep: true,
+      handler: function () {
+        // console.log('value')
+        if (this.step < 3 + this.god_numbers.length && this.step > 2) {
+          this.step_change[this.step] = true
+        }
+      }
+    },
+    after_change_value: {
+      deep: true,
+      immediate: true,
+      handler: function () {
+        // console.log('after value', this.step)
+        if (this.step < 3 + 2 * this.god_numbers.length && this.step > 2 + this.god_numbers.length) {
+          if (this.step === 13 && this.first_after_value_13 === false) { // when we become to after_change state,
+            // all value copied to after_value_change and this cause detect fake step_change on step 13
+            this.first_after_value_13 = true
+          } else {
+            this.step_change[this.step] = true
+          }
+        }
+      }
+    },
+    judge_value: {
+      deep: true,
+      handler: function () {
+        // console.log('judge value')
+        if (this.step < 3 + 3 * this.god_numbers.length && this.step > 2 + 2 * this.god_numbers.length) {
+          this.step_change[this.step] = true
+        }
+      }
     }
   },
   methods: {
@@ -240,8 +233,10 @@ export default {
     },
     disableNextButton: function () {
       if (this.step >= 2 && this.step <= 3 + 3 * this.god_numbers.length) { // Must check `dont want to change`
-        console.log(this.step_change[this.step])
-        console.log(this.not_change)
+        // console.log('step disable', this.step)
+        // console.log('step change in disable', this.step_change)
+        // console.log(this.step_change[this.step])
+        // console.log(this.not_change)
         if (this.step_change[this.step] !== true && this.not_change === false) {
           return true
         }
@@ -291,7 +286,9 @@ export default {
         'complete': true,
         'step_presence': this.step_presence,
         'step_sequence': this.step_sequence,
-        'is_mobile': this.detectMob()}
+        'is_mobile': this.detectMob(),
+        'send_time': (new Date().getTime()),
+        'step_change': this.step_change}
     },
     prevStep: async function () {
       this.spinner = true
