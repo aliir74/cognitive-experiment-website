@@ -37,6 +37,13 @@
             <Explain :show_image="false" :msg="thankyou_msg" v-show="step === 5+3*god_numbers.length"></Explain>
           </b-col>
         </b-row>
+        <b-row style="margin: 20px;">
+          <b-col style="margin: auto" v-show="step > 1 && step <= 3+3*god_numbers.length">
+             <b-form-checkbox v-model="not_change">نمی‌خواهم تغییر دهم</b-form-checkbox>
+          </b-col>
+          <b-col></b-col>
+          <b-col></b-col>
+        </b-row>
         <b-row class="vh-50" style="margin: 20px;">
           <b-col>
             <b-button variant="success" v-on:click="nextStep()" :disabled="disableNextButton()"
@@ -71,8 +78,8 @@ export default {
   data () {
     return {
       spinner: false,
-      explain_msg: 'فرض کنید که شما <span class="numbers">100 هزار تومن</span> پول دارید و قراره اون رو با یه نفر دیگه تقسیم کنید. شما هر قدر که دوست داشته باشید می‌تونید پول رو برای خودتون نگه دارید و باقی رو به نفر دیگه بدید.<br>یه نفر دیگه هم تو جمع ما وجود داره که بهش می‌گیم ناظر. ناظر <span class="numbers">{0} هزار تومن</span> پول داره که بعد از تقسیم کردن پول توسط شما، پول خودش رو بین شما و نفر دیگه تقسیم می‌کنه و شما اطلاعاتی در مورد تصمیم‌های قبلیش ندارید. بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما شخص اول هستید و مقداری از پولتون رو به شخص دوم می‌دید.',
-      explain_msg_god: 'فرض کنید که نفر اول <span class="numbers">100 هزار تومن</span> پول دارد و قراره اون رو با نفر دوم تقسیم کند. <br> شما هم به عنوان ناظر در این جمع وجود دارید. ناظر <span class="numbers">{0} هزار تومن</span> پول داره که بعد از تقسیم کردن پول توسط نفر اول پول خودش رو بین نفر اول و نفر دوم تقسیم می‌کنه . بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما ناظر هستید و قراره پولتون رو بین دو نفر تقسیم کنید.',
+      explain_msg: 'فرض کنید که شما <span class="numbers">100 هزار تومن</span> پول دارید و قراره اون رو با یه نفر دیگه تقسیم کنید. شما هر قدر که دوست داشته باشید می‌تونید پول رو برای خودتون نگه دارید و باقی رو به نفر دیگه بدید.<br>یه نفر دیگه هم تو جمع ما وجود داره که بهش می‌گیم ناظر. ناظر <span class="numbers">{0} هزار تومن</span> پول داره که بعد از تقسیم کردن پول توسط شما، پول خودش رو بین شما و نفر دیگه تقسیم می‌کنه و شما اطلاعاتی در مورد تصمیم‌های قبلیش ندارید. بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما شخص اول هستید و مقداری از پولتون رو به شخص دوم می‌دید.<br>سعی کنید خود را واقعا در جایگاه نفر اول فرض کنید و تصمیم گیری کنید.',
+      explain_msg_god: 'فرض کنید که نفر اول <span class="numbers">100 هزار تومن</span> پول دارد و قراره اون رو با نفر دوم تقسیم کند. <br> شما هم به عنوان ناظر در این جمع وجود دارید. ناظر <span class="numbers">{0} هزار تومن</span> پول داره که بعد از تقسیم کردن پول توسط نفر اول پول خودش رو بین نفر اول و نفر دوم تقسیم می‌کنه . بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما ناظر هستید و قراره پولتون رو بین دو نفر تقسیم کنید.<br>سعی کنید خود را واقعا در جایگاه ناظر فرض کنید و تصمیم گیری کنید.',
       help_msg: 'فرض کنید که شما <span class="numbers">100 هزار تومن</span> پول دارید و قراره اون رو با یه نفر دیگه تقسیم کنید. شما هر قدر که دوست داشته باشید می‌تونید پول رو برای خودتون نگه دارید و باقی رو به نفر دیگه بدید.<br>یه نفر دیگه هم تو جمع ما وجود داره که بهش می‌گیم ناظر. ناظر <span class="numbers">{0} هزار تومن</span> پول داره که بعد از تقسیم کردن پول توسط شما، پول خودش رو بین شما و نفر دیگه تقسیم می‌کنه و شما اطلاعاتی در مورد تصمیم‌های قبلیش ندارید. بنابراین همون‌طور که در شکل مشاهده می‌کنید سه نفر در این آزمایش حضور دارن و شما شخص اول هستید و مقداری از پولتون رو به شخص دوم می‌دید.',
       decision_msg: '        اگر فقط یکبار فرصت داشته باشید که پول رو تقسیم کنید، چه مقدار از پول رو به طرف مقابل می‌دید؟ (از 0 تا  100 هزار تومن)',
       god_msg: 'حالا فرض کنید شما ناظر آزمایش قبل هستید و <span class="numbers">{1} هزار تومن</span> پول در اختیار دارید. اگر نفر اول <span class="numbers">{0} هزار تومن</span> به نفر دوم داده باشه شما به نفر اول چقدر پول میدید؟',
@@ -108,7 +115,7 @@ export default {
         'وقتی کسی را در یک موقعیت بحرانی می‌بینم که نیاز به کمک دارد، ناتوان می‌شوم.',
         'قبل از اینکه از کسی انتقاد کنم، سعی می‌کنم تصور کنم که اگر جای او بودم چه احساسی داشتم.'],
       thankyou_msg: 'ممنون از وقتی که برای انجام آزمایش ما گذاشتی :)',
-      god_numbers: [0],
+      god_numbers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       after_change_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       judge_value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -124,9 +131,12 @@ export default {
         'sex': ''
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      step_change: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+        false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       step_sequence: [0],
       help: 0,
-      step: 0,
+      step: 1,
+      not_change: false,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
@@ -139,16 +149,69 @@ export default {
     Explain,
     Decision
   },
+  mounted () {
+    var vm = this
+    this.value.forEach((index, val) => {
+      vm.$watch(['value', index].join('.'), (newVal, oldVal) => {
+        console.info('arr_of_numbers', newVal, oldVal)
+        console.log(vm.step_change)
+        vm.disableNextButton()
+        vm.step_change[3 + index] = true
+      })
+    })
+    this.after_change_value.forEach((index, val) => {
+      vm.$watch(['after_change_value', index].join('.'), (newVal, oldVal) => {
+        console.info('arr_of_numbers2', newVal, oldVal)
+        vm.step_change[3 + this.god_numbers.length + index] = true
+      })
+    })
+    this.judge_value.forEach((index, val) => {
+      vm.$watch(['judge_value', index].join('.'), (newVal, oldVal) => {
+        console.info('arr_of_numbers3', newVal, oldVal)
+        vm.step_change[3 + 2 * this.god_numbers.length + index] = true
+      })
+    })
+  },
+  // computed: {
+  //   computedValue: function () {
+  //     console.log('hellooo')
+  //     return this.value
+  //   }
+  // },
   watch: {
-    step: function () {
+    // computedValue: {
+    //   deep: true,
+    //   handler: function (oldValue, newValue) {
+    //     console.log('byyyy')
+    //     console.log(oldValue)
+    //     for (let i = 0; i < this.value.length; i++) {
+    //       if (oldValue[i] !== newValue[i]) {
+    //         this.step_change[3 + i] = true
+    //         console.log(3 + i)
+    //       }
+    //     }
+    //   }
+    // },
+    step: function (newStep, oldStep) {
+      console.log(this.step)
       this.step_time[this.step].push(new Date().getTime())
       this.step_presence[this.step] += 1
       this.step_sequence.push(this.step)
+      this.not_change = false
       if (this.step >= 3 && this.step < 3 + 3 * this.god_numbers.length) {
         this.help_msg = this.explain_msg_god
       } else {
         this.help_msg = this.explain_msg
       }
+      if (newStep > oldStep) {
+        this.step_change[newStep] = false
+      }
+    },
+    dictator_value: function () {
+      this.step_change[2] = true
+    },
+    dictator_again: function () {
+      this.step_change[3 + 3 * this.god_numbers.length] = true
     }
   },
   methods: {
@@ -176,6 +239,13 @@ export default {
       return false
     },
     disableNextButton: function () {
+      if (this.step >= 2 && this.step <= 3 + 3 * this.god_numbers.length) { // Must check `dont want to change`
+        console.log(this.step_change[this.step])
+        console.log(this.not_change)
+        if (this.step_change[this.step] !== true && this.not_change === false) {
+          return true
+        }
+      }
       if ((this.dictator_value === '') || (this.value.indexOf('') !== -1) ||
           (this.judge_value.indexOf('') !== -1) || (this.after_change_value.indexOf('') !== -1) ||
           this.dictator_again === '') {
