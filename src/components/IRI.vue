@@ -2,7 +2,7 @@
     <b-card img-right>
         <b-card-text v-for="(it, index) in msg" :key="index">
             {{ it }}
-            <b-input-group prepend="مخالف" append="موافق">
+            <b-input-group dir="ltr" prepend="مخالف" append="موافق">
                 <b-form-input v-model="value[index]" type="range" min="0" max="4"
                               @change="$emit('update:value', value);"></b-form-input>
             </b-input-group>
