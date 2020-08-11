@@ -122,6 +122,7 @@ export default {
         'sex': ''
       },
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      step_sequence: [0],
       help: 0,
       step: 0,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
@@ -140,6 +141,7 @@ export default {
     step: function () {
       this.step_time[this.step].push(new Date().getTime())
       this.step_presence[this.step] += 1
+      this.step_sequence.push(this.step)
     }
   },
   methods: {
@@ -211,6 +213,7 @@ export default {
         'help': this.help,
         'complete': true,
         'step_presence': this.step_presence,
+        'step_sequence': this.step_sequence,
         'is_mobile': this.detectMob()}
     },
     prevStep: async function () {
