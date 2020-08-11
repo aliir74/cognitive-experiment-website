@@ -196,6 +196,22 @@ export default {
     sleep: function (ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
     },
+    sendData: function () {
+      return {'value': this.value,
+        'after_change_value': this.after_change_value,
+        'iri_value': this.iri_value,
+        'judge_value': this.judge_value,
+        'dictator_value': this.dictator_value,
+        'dictator_again': this.dictator_again,
+        'email': this.person.email,
+        'mobile': this.person.mobile,
+        'name': this.person.name,
+        'step_time': this.step_time,
+        'help': this.help,
+        'complete': true,
+        'step_presence': this.step_presence,
+        'is_mobile': this.detectMob()}
+    },
     prevStep: async function () {
       this.spinner = true
       await this.sleep(1000)
@@ -229,22 +245,15 @@ export default {
         this.step += 1
       } else if (this.step === 3 + 3 * this.god_numbers.length) {
         this.next_text = 'ارسال جواب‌ها'
-        this.step += 1
+        $backend.submit(this.sendData())
+          .then(responseData => {
+            this.step += 1
+          })
+          .catch(error => {
+            alert(error.message)
+          })
       } else if (this.step === 4 + 3 * this.god_numbers.length) {
-        $backend.submit({'value': this.value,
-          'after_change_value': this.after_change_value,
-          'iri_value': this.iri_value,
-          'judge_value': this.judge_value,
-          'dictator_value': this.dictator_value,
-          'dictator_again': this.dictator_again,
-          'email': this.person.email,
-          'mobile': this.person.mobile,
-          'name': this.person.name,
-          'step_time': this.step_time,
-          'help': this.help,
-          'complete': true,
-          'step_presence': this.step_presence,
-          'is_mobile': this.detectMob()})
+        $backend.submit(this.sendData())
           .then(responseData => {
             this.step += 1
           })
