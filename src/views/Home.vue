@@ -124,7 +124,7 @@ export default {
       step_presence: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       help: 0,
       step: 0,
-      step_time: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
       next_text: 'بعدی',
       email_reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     }
@@ -138,6 +138,7 @@ export default {
   },
   watch: {
     step: function () {
+      this.step_time[this.step].push(new Date().getTime())
       this.step_presence[this.step] += 1
     }
   },
@@ -221,9 +222,6 @@ export default {
     nextStep: async function () {
       this.spinner = true
       await this.sleep(1000)
-      if (this.step_time[this.step] === -1) {
-        this.step_time[this.step] = new Date().getTime()
-      }
 
       if (this.step === 0) {
         $backend.register({'person': this.person}).then(responseData => {
