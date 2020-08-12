@@ -135,7 +135,7 @@ export default {
         false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       step_sequence: [0],
       help: 0,
-      step: 1,
+      step: 0,
       first_after_value_13: false,
       not_change: false,
       step_time: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
